@@ -40,15 +40,6 @@ select{-webkit-appearance:none;appearance:none}
 }
 .ttl span{color:#e91e8c}
 
-/* ── WEEK BADGE ─────────────────────────── */
-.wbadge{
-  text-align:center;border-radius:16px;
-  padding:8px 14px;min-width:78px;
-  border:1.5px solid
-}
-.wl{font-size:9px;font-weight:800;letter-spacing:1.5px;opacity:.7}
-.wv{font-family:Impact,sans-serif;font-size:2rem;line-height:1}
-.wr{font-size:10px;font-weight:700;margin-top:1px}
 
 /* ── DEADLINE ───────────────────────────── */
 .dlbar{
@@ -300,11 +291,15 @@ var P=[
 ];
 
 // ── HELPERS ────────────────────────────────────────────────────────────────
-function getISO(){var d=new Date(),f=new Date(d.getFullYear(),0,1),x=Math.floor((d-f)/86400000);return Math.ceil((x+f.getDay()+1)/7);}
-function getWK(){var d=new Date();return d.getFullYear()+'-W'+getISO();}
+function getParisNow(){
+  var ds=new Date().toLocaleDateString('en-CA',{timeZone:'Europe/Paris'});
+  return new Date(ds+'T12:00:00');
+}
+function getISO(){var d=getParisNow(),f=new Date(d.getFullYear(),0,1),x=Math.floor((d-f)/86400000);return Math.ceil((x+f.getDay()+1)/7);}
+function getWK(){var d=getParisNow();return d.getFullYear()+'-W'+getISO();}
 function getTI(){
-  var d=new Date().getDay();
-  var dow=d===0?6:d-1;
+  var dow=getParisNow().getDay();
+  dow=dow===0?6:dow-1;
   var map={0:0,2:1,4:2,6:3};
   if(map[dow]!==undefined){return map[dow];}
   if(dow===1){return 1;}
@@ -312,14 +307,12 @@ function getTI(){
   if(dow===5){return 3;}
   return 0;
 }
-function getReps(ex,wt){
+function getReps(ex){
   if(ex.cat==="cardio"){
-    var cA={j1_cardio:"15-20 min",j2_cardio:"20 min",j3_cardio:"15-20 min",j4_cardio:"20-30 min marche"};
-    var cB={j1_cardio:"25 min",j2_cardio:"30 min",j3_cardio:"25 min",j4_cardio:"30 min marche"};
-    return wt==="B"?(cB[ex.id]||"25 min"):(cA[ex.id]||"15-20 min");
+    var c={j1_cardio:"20 min",j2_cardio:"20 min",j3_cardio:"20 min",j4_cardio:"25 min marche"};
+    return c[ex.id]||"20 min";
   }
-  if(ex.isIso){return wt==="A"?"3 x 12 reps":"3 x 20 reps";}
-  return wt==="A"?"3 x 12 reps":"3 x 20 reps";
+  return "3 x 12 reps";
 }
 function buildBlocks(exs){
   var blocks=[],cur=null;
@@ -345,9 +338,8 @@ function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 
 // ── STATE ──────────────────────────────────────────────────────────────────
 var TI=getTI();
-var WT=getISO()%2===1?'A':'B';
-var DL=new Date('2026-06-11');
-var JLEFT=Math.max(0,Math.floor((DL-new Date())/86400000));
+var DL='2026-06-11';
+var JLEFT=Math.max(0,Math.floor((new Date(DL)-getParisNow())/86400000));
 var WK=getWK();
 var S={
   mode:'today',
@@ -422,7 +414,6 @@ function bindEvents(){
 }
 
 function buildHTML(){
-  var wA=WT==='A';
   var td=P[TI];
   var daysHTML=S.mode==='today'
     ?dayHTML(P[TI],TI,true)
@@ -433,11 +424,7 @@ function buildHTML(){
   return '<div class="hdr">'
     +'<div class="hdr-top">'
     +'<div class="ttl">MYRIAM <span style="color:#e91e8c">&#9792;</span></div>'
-    +'<div class="wbadge" style="background:'+(wA?'rgba(255,77,28,.15)':'rgba(46,204,113,.15)')+';border:1.5px solid '+(wA?'#e91e8c':'#2ecc71')+'">'
-    +'<div class="wl">SEMAINE</div>'
-    +'<div class="wv" style="color:'+(wA?'#e91e8c':'#2ecc71')+'">'+WT+'</div>'
-    +'<div class="wr" style="color:'+(wA?'#e91e8c':'#2ecc71')+'">'+(wA?'Renforcement':'Endurance+')+'</div>'
-    +'</div></div>'
+    +'</div>'
     +'<div class="dlbar">'
     +'<div><div class="dll">&#128197; R\u00c9VISION DU PROGRAMME</div><div class="dld">11 Juin 2026</div></div>'
     +'<div style="text-align:right">'+( JLEFT===0 ? '<div class="dlc" style="color:#e91e8c;font-size:1rem;line-height:1.1">&#10060; CHANGER</div><div class="dls" style="color:#e91e8c;font-weight:700">LE PROGRAMME</div>' : '<div class="dlc" style="color:'+(JLEFT<14?'#e91e8c':'#a855f7')+'">J\u2013'+JLEFT+'</div><div class="dls">jours restants</div>')+'</div>'
@@ -516,7 +503,7 @@ function abdoHTML(){
 function exHTML(ex,day){
   var done=!!S.done[ex.id];
   var ec=exCol(ex,day.color);
-  var reps=getReps(ex,WT);
+  var reps=getReps(ex);
   var w=S.weights[ex.id]||'';
   var hist=S.hist[ex.id]||[];
   var last=hist.length>0?hist[hist.length-1]:null;
