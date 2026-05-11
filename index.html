@@ -168,41 +168,6 @@ select{-webkit-appearance:none;appearance:none}
   font-size:11px;color:#28a860;font-weight:600
 }
 
-/* ── FAB ────────────────────────────────── */
-.fab{
-  position:fixed;
-  bottom:calc(24px + env(safe-area-inset-bottom));right:20px;
-  width:56px;height:56px;border-radius:50%;
-  background:#fff;
-  border:2px solid #e91e8c;color:#e91e8c;
-  font-size:24px;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 20px rgba(233,30,140,.15);z-index:300
-}
-.fab:active{transform:scale(.92)}
-
-/* ── TIMER OVERLAY ──────────────────────── */
-.tov{
-  position:fixed;bottom:0;left:0;right:0;
-  background:#fff;
-  padding:16px 16px calc(16px + env(safe-area-inset-bottom));
-  z-index:500;
-  border-top:1px solid #f0e4f8;
-  box-shadow:0 -4px 24px rgba(180,120,220,.12);
-  border-top-left-radius:22px;border-top-right-radius:22px
-}
-.tlbl{font-size:9px;color:#c0a8d0;letter-spacing:2px;font-weight:800;text-transform:uppercase;margin-bottom:4px}
-.tcnt{font-family:Impact,sans-serif;font-size:2.8rem;line-height:1;letter-spacing:1px;color:#2d1b3e}
-.tbg{margin-top:8px;height:4px;background:#f0e4f8;border-radius:2px;overflow:hidden}
-.tfill{height:100%;border-radius:2px;transition:width .2s linear}
-.trow{display:flex;align-items:center;gap:14px}
-.tskip{
-  padding:10px 18px;
-  background:#fdf8ff;
-  border:1.5px solid #e8d4f4;
-  border-radius:12px;
-  color:#b090c8;font-size:13px;font-weight:700;flex-shrink:0
-}
 </style>
 </head>
 <body>
@@ -347,8 +312,6 @@ var S={
   weights:ld('myr_w',{}),
   hist:ld('myr_h',{}),
   done:ld('myr_k',null)===WK?ld('myr_d',{}):{},
-  timer:null,
-  timerIv:null
 };
 S.openDays[TI]=true;
 if(ld('myr_k',null)!==WK){sv('myr_k',WK);}
@@ -405,12 +368,6 @@ function bindEvents(){
     });
     sel.addEventListener('click',function(e){e.stopPropagation();});
   });
-  // FAB
-  var fab=document.getElementById('fab');
-  if(fab)fab.addEventListener('click',startTimer);
-  // Skip timer
-  var skip=document.getElementById('tskip');
-  if(skip)skip.addEventListener('click',function(){stopTimer();render();});
 }
 
 function buildHTML(){
@@ -418,9 +375,6 @@ function buildHTML(){
   var daysHTML=S.mode==='today'
     ?dayHTML(P[TI],TI,true)
     :P.map(function(d,i){return dayHTML(d,i,false);}).join('');
-  var fabHTML=S.timer?'':'<button class="fab" id="fab">&#9203;</button>';
-  var timerH=S.timer?timerHTML():'';
-
   return '<div class="hdr">'
     +'<div class="hdr-top">'
     +'<div class="ttl">MYRIAM <span style="color:#e91e8c">&#9792;</span></div>'
@@ -434,7 +388,6 @@ function buildHTML(){
     +'<button class="mbtn" id="btn-week" style="'+(S.mode==='week'?'background:rgba(233,30,140,.15);border-color:#e91e8c;color:#e91e8c':'')+'">&#128198; SEMAINE</button>'
     +'</div>'
     +'<div class="days">'+daysHTML+'</div>'
-    +fabHTML+timerH;
 }
 
 function dayHTML(day,idx,forceOpen){
@@ -538,55 +491,6 @@ function exHTML(ex,day){
     +'<div class="exck" style="background:\'+(done?\'#2ecc71\':\'transparent\')+\';border-color:\'+(done?\'#2ecc71\':\'#333\')+\';color:\'+(done?\'#000\':\'transparent\')+\'">\u2713</div>'+'</div>'+wRow+'</div>';
 }
 
-function timerHTML(){
-  var r=S.timer.remaining,t=S.timer.total,c=S.timer.color;
-  var pct=Math.round((t-r)/t*100);
-  var m=Math.floor(r/60),s=String(r%60).padStart(2,'0');
-  return '<div class="tov" style="border-top:2px solid '+c+'">'
-    +'<div class="trow">'
-    +'<div style="flex:1">'
-    +'<div class="tlbl">&#9203; REPOS EN COURS</div>'
-    +'<div class="tcnt" id="tc" style="color:'+c+'">'+m+':'+s+'</div>'
-    +'<div class="tbg"><div class="tfill" id="tf" style="width:'+pct+'%;background:'+c+'"></div></div>'
-    +'</div>'
-    +'<button class="tskip" id="tskip">Passer</button>'
-    +'</div></div>';
-}
-
-// ── TIMER ──────────────────────────────────────────────────────────────────
-function startTimer(){
-  stopTimer();
-  S.timer={remaining:90,total:90,color:'#e91e8c'};
-  var t0=Date.now();
-  S.timerIv=setInterval(function(){
-    var left=90-Math.floor((Date.now()-t0)/1000);
-    if(left<=0){stopTimer();beep();render();return;}
-    S.timer.remaining=left;
-    var tc=document.getElementById('tc');
-    var tf=document.getElementById('tf');
-    if(tc){tc.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');}
-    if(tf){tf.style.width=Math.round((90-left)/90*100)+'%';}
-  },250);
-  render();
-}
-function stopTimer(){
-  if(S.timerIv){clearInterval(S.timerIv);S.timerIv=null;}
-  S.timer=null;
-}
-function beep(){
-  try{
-    var ctx=new(window.AudioContext||window.webkitAudioContext)();
-    [[880,0,.3],[1100,.35,.35],[1320,.75,.5]].forEach(function(x){
-      var o=ctx.createOscillator(),g=ctx.createGain();
-      o.connect(g);g.connect(ctx.destination);
-      o.type='sine';o.frequency.value=x[0];
-      g.gain.setValueAtTime(0,ctx.currentTime+x[1]);
-      g.gain.linearRampToValueAtTime(.4,ctx.currentTime+x[1]+.02);
-      g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+x[1]+x[2]);
-      o.start(ctx.currentTime+x[1]);o.stop(ctx.currentTime+x[1]+x[2]);
-    });
-  }catch(e){}
-}
 
 setInterval(function(){
   var nwk=getWK();
