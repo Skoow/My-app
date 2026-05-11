@@ -442,29 +442,24 @@ function dayHTML(day,idx,forceOpen){
     +'</div>';
 }
 
-function warmupBannerHTML(ex){
-  var isHome=ex.id&&ex.id[1]==='5';
-  return '<div class="wbanner">'
-    +'<div class="wbico">'+(isHome?'🧘':'🔥')+'</div>'
-    +'<div><div class="wbtitle">'+(isHome?'MOBILITÉ ARTICULAIRE · OBLIGATOIRE':'ÉCHAUFFEMENT · OBLIGATOIRE')+'</div>'
-    +'<div class="wbsub">'+ex.reps+' &mdash; '+ex.tip+'</div>'
+function absBannerHTML(ex){
+  return '<div class="wbanner" style="background:linear-gradient(135deg,#f5f0ff,#faf5ff);border-bottom:2px solid #a855f7">'
+    +'<div class="wbico">💪</div>'
+    +'<div><div class="wbtitle" style="color:#a855f7">ABDOMINAUX · OBLIGATOIRE</div>'
+    +'<div class="wbsub" style="color:#7030b8">'+ex.name+' · '+ex.reps+' — '+ex.tip+'</div>'
     +'</div></div>';
 }
 function bodyHTML(day){
-  var warmupEx=null,absExs=[],cardioExs=[],mainExs=[];
+  var absExs=[],cardioExs=[],mainExs=[];
   for(var i=0;i<day.exercises.length;i++){
     var ex=day.exercises[i];
-    if(ex.cat==='warmup')warmupEx=ex;
+    if(ex.cat==='warmup')continue;
     else if(ex.isAbs)absExs.push(ex);
     else if(ex.cat==='cardio')cardioExs.push(ex);
     else mainExs.push(ex);
   }
-  var html=(warmupEx?warmupBannerHTML(warmupEx):'');
+  var html=absExs.map(function(ex){return absBannerHTML(ex);}).join('');
   html+=buildBlocks(mainExs).map(function(b){return blkHTML(b,day);}).join('');
-  if(absExs.length){
-    html+='<div class="absshdr"><span style="font-size:16px">💪</span><span class="absstxt">ABDOMINAUX · NON COMPTÉS</span></div>';
-    html+=absExs.map(function(ex){return exHTML(ex,day);}).join('');
-  }
   html+=cardioExs.map(function(ex){return exHTML(ex,day);}).join('');
   return html;
 }
