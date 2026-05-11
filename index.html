@@ -139,6 +139,8 @@ select{-webkit-appearance:none;appearance:none}
 .bc{color:#28a860;border-color:rgba(40,168,96,.3);background:rgba(40,168,96,.07)}
 .bi{color:#9050c8;border-color:rgba(144,80,200,.3);background:rgba(144,80,200,.07)}
 .bd{color:#28a860;border-color:rgba(40,168,96,.3);background:rgba(40,168,96,.1)}
+.bga{color:#20b8a8;border-color:rgba(32,184,168,.3);background:rgba(32,184,168,.07)}
+.bw{color:#f59e0b;border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.07)}
 .exck{
   width:26px;height:26px;flex-shrink:0;
   border-radius:50%;border:2px solid #e8d4f4;
@@ -212,46 +214,68 @@ function mkIcon(n,c,sz){
 
 // ── PROGRAMME ──────────────────────────────────────────────────────────────
 var P=[
-  {id:"j1",label:"LUN",name:"Jambes + Ischios + Fessiers",sub:"Salle - Jambes + Ischios + Gainage",color:"#e91e8c",exercises:[
-    {id:"j1_plank",   name:"Planche avant",               icon:"squat",          cat:"gainage", tip:"Au sol - Appui avant-bras et orteils - Corps droit - Coccyx dans l air - Contracte les abdos - 3 x 30 secondes - Haut et bas abdos"},
-    {id:"j1_mountain",name:"Mountain Climbers lents",      icon:"stairs",         cat:"gainage", tip:"Position planche - Ramene un genou vers la poitrine alternativement - Lentement et controle - Bas abdos - Coccyx ne touche pas le sol"},
-    {id:"j1_squat",   name:"Smith Machine Squat",         icon:"squat",          cat:"semi",   tip:"Barre guidee sur rail - Pieds largeur hanches - Descends cuisses paralleles - Dos droit - Remonte en contractant les fessiers"},
-    {id:"j1_pullthr",name:"Cable Pull Through",icon:"pullThrough",cat:"assist",tip:"Poulie basse - Corde entre les jambes - Penche le buste en avant dos plat - Reviens debout en contractant les fessiers - Tire vers les fessiers - Zero impact"},
-    {id:"j1_kick",    name:"Cable Glute Kickback",         icon:"glueKick",       cat:"assist", tip:"Sangle a la cheville - Face a la poulie - Pousse la jambe vers l arriere - Contracte le fessier en haut - Garde le dos droit - Alterne les jambes"},
-    {id:"j1_hipext",  name:"Cable Hip Extension debout",   icon:"pullThrough",    cat:"assist", tip:"Sangle cheville - Debout face a la poulie - Jambe tendue vers l ARRIERE - Comme donner un coup de pied derriere - Fessier et ischio - Alterne"},
-    {id:"j1_abduct",  name:"Cable Hip Abduction debout",   icon:"hipAbduct",      cat:"assist", tip:"Sangle cheville - Debout de COTE par rapport a la poulie - Jambe tendue vers le COTE - Ecarte la jambe loin de l autre - Fessier externe"},
-    {id:"j1_legcurl", name:"Lying Leg Curl Machine",       icon:"legCurl",        cat:"assist", tip:"Ventre sur la machine - Ramene les talons vers les fesses - Ischios - Contraction en haut - Charge tres legere"},
-    {id:"j1_cardio",  name:"Velo elliptique",              icon:"inclineTreadmill",cat:"cardio",tip:"20 min apres seance - Allure moderee - Cardio doux sans impact - Adapte spondylarthrite et coccyx"},
+  {id:"j1",label:"LUN",name:"Cuisses · Culotte de Cheval",sub:"Salle · Intérieur cuisses · Gainage",color:"#e91e8c",exercises:[
+    {id:"j1_warmup", name:"Échauffement — Marche tapis ou elliptique",     icon:"inclineTreadmill",cat:"warmup", reps:"5 min",           tip:"Marche légère ou elliptique allure douce · Prépare les articulations · Indispensable avec la spondylarthrite"},
+    {id:"j1_squat",  name:"Squat gobelet haltère",                              icon:"squat",           cat:"free",   reps:"3 × 12 reps", tip:"DEBOUT · Tiens l haltère à 2 mains contre la poitrine · Descends cuisses parallèles · Dos droit · Remonte en contractant les fessiers"},
+    {id:"j1_bulg",   name:"Bulgarian split squat haltères",                     icon:"squat",           cat:"free",   reps:"3 × 12 / côté", tip:"DEBOUT · Pied arrière sur le banc · Descends le genou avant vers le sol · Commence sans haltères pour l équilibre · Fessiers + cuisses · Côté faible d abord"},
+    {id:"j1_adduc",  name:"Adduction debout poulie basse",                           icon:"hipAbduct",       cat:"assist", reps:"3 × 15 / côté", tip:"DEBOUT · Sangle cheville · Ramène la jambe vers l intérieur · Intérieur des cuisses · Garde le dos droit"},
+    {id:"j1_ss1a",   name:"Squat sumo haltère",                                 icon:"squat",           cat:"free",   reps:"7 reps",          tip:"⚡ SUPER 7 · Pieds très écartés pointes vers l extérieur · Haltère tenu à 2 mains · Descends lentement · Intérieur cuisses + fessiers", pair:"ss1"},
+    {id:"j1_ss1b",   name:"Fente latérale haltère",                        icon:"squat",           cat:"free",   reps:"7 reps / côté", tip:"⚡ SUPER 7 · MÊMe haltère · Grand pas sur le côté · Genou fléchi · Dos droit · Intérieur cuisses · Alterne les côtés", pair:"ss1"},
+    {id:"j1_bird",   name:"Bird-dog à 4 pattes",                                icon:"stairs",          cat:"gainage",reps:"3 × 10 / côté", tip:"À 4 PATTES · Étends le bras droit + jambe gauche simultanément · Maintiens 2 sec · Alterne · Protège la colonne · Essentiel spondylarthrite"},
+    {id:"j1_plank",  name:"Planche avant",                                           icon:"squat",           cat:"gainage",reps:"3 × 30 sec",   tip:"FACE VENTRE · Appui avant-bras et orteils · Corps droit · Contracte les abdos · Ne laisse pas les hanches tomber"},
+    {id:"j1_iso",    name:"Abduction debout poulie basse — lente",              icon:"hipAbduct",       cat:"assist", reps:"3 × 15 / côté", isIso:true, tip:"🎯 ISOLATION · DEBOUT · Sangle cheville · Écarte la jambe vers le côté LENTEMENT · Culotte de cheval · Concentre-toi sur la contraction"},
+    {id:"j1_cardio", name:"Cardio fin — Marche inclinée ou elliptique",    icon:"inclineTreadmill",cat:"cardio", reps:"15 min",          tip:"APRÈS l isolation · Marche inclinée 6-8% ou elliptique · Allure modérée · Brûle les graisses sans perdre le muscle"},
   ]},
-  {id:"j2",label:"MER",name:"Epaules + Bras",sub:"Salle - Epaules + Bras + Gainage",color:"#3d8bff",exercises:[
-    {id:"j2_plank",   name:"Planche avant",               icon:"squat",          cat:"gainage", tip:"Au sol - Appui avant-bras et orteils - Corps droit - Coccyx dans l air - Contracte les abdos - 3 x 30 secondes"},
-    {id:"j2_sideplank",name:"Planche laterale",           icon:"squat",          cat:"gainage", tip:"Au sol - Appui sur l avant-bras lateral et les orteils - Corps de cote - Contracte les obliques - 3 x 20 secondes de chaque cote"},
-    {id:"j2_press",   name:"Smith Overhead Press",        icon:"shoulderPress",  cat:"semi",   tip:"DEBOUT - Barre guidee - Poignees a hauteur epaule - Pousse vers le ciel - Epaules"},
-    {id:"j2_lateral", name:"Dumbbell Lateral Raise",      icon:"lateralRaise",   cat:"free",   tip:"DEBOUT - Halteres legers - Bras en croix jusqu a hauteur epaule - Deltoide lateral"},
-    {id:"j2_curl",    name:"Curl halteres debout",        icon:"barbellRow",     cat:"free",   tip:"DEBOUT - Coudes colles au corps - Alterne les bras - Biceps - Charge legere au debut"},
-    {id:"j2_tri",     name:"Cable Triceps Pushdown",      icon:"tricepsPush",    cat:"assist", tip:"DEBOUT - Corde ou barre droite - Coudes colles - Pousse vers le bas - Triceps"},
-    {id:"j2_face",    name:"Cable Face Pull debout",      icon:"facePull",       cat:"assist", tip:"DEBOUT - Corde vers le visage - Coudes hauts - Sante des epaules - Essentiel spondylarthrite"},
-    {id:"j2_cardio",  name:"Marche inclinee",             icon:"inclineTreadmill",cat:"cardio",tip:"20 min - Inclinaison 6-8% - Allure marche rapide - Cardio doux adapte spondylarthrite"},
+  {id:"j2",label:"MAR",name:"Haut du corps · Triceps",sub:"Salle · Dos · Épaules · Dessous des bras",color:"#3d8bff",exercises:[
+    {id:"j2_warmup", name:"Échauffement — Marche tapis ou elliptique",     icon:"inclineTreadmill",cat:"warmup", reps:"5 min",           tip:"Marche légère ou elliptique · Mobilise les épaules et le dos avant de commencer"},
+    {id:"j2_latpull",name:"Tirage vertical poulie haute — à genoux",       icon:"latPull",         cat:"assist", reps:"3 × 12 reps", tip:"À GENOUX · Attrape la barre large · Tire vers la poitrine · Dos large · Garde les épaules basses · Ne jamais s asseoir"},
+    {id:"j2_row",    name:"Rowing debout poulie basse",                               icon:"seatedRow",       cat:"assist", reps:"3 × 12 reps", tip:"DEBOUT · Poulie basse · Tire les poignées vers le ventre · Coudes le long du corps · Dos épaisseur · Garde le dos droit"},
+    {id:"j2_press",  name:"Développé épaules haltères debout",   icon:"shoulderPress",   cat:"free",   reps:"3 × 12 reps", tip:"DEBOUT · Haltères à hauteur épaule · Pousse vers le ciel · Dos droit · Ne bloque pas les coudes en haut · Épaules"},
+    {id:"j2_lat",    name:"Élévations latérales haltères",        icon:"lateralRaise",    cat:"free",   reps:"3 × 15 reps", tip:"DEBOUT · Bras légèrement fléchis · Monte jusqu à hauteur épaule · Redescends lentement · Deltoïde latéral · Charge légère"},
+    {id:"j2_push",   name:"Pompes — sur genoux si besoin",                      icon:"bench",           cat:"free",   reps:"3 × 12 reps", tip:"FACE VENTRE · Mains largeur épaule · Corps droit · Descends la poitrine vers le sol · Sur les genoux si besoin · Pectoraux + triceps"},
+    {id:"j2_ss2a",   name:"Curl biceps haltère",                                icon:"preacher",        cat:"free",   reps:"7 reps",          tip:"⚡ SUPER 7 · DEBOUT · Coudes collés au corps · Fléchis vers l épaule · Redescends lentement · Biceps", pair:"ss2"},
+    {id:"j2_ss2b",   name:"Kickback triceps haltère",                           icon:"tricepsPush",     cat:"free",   reps:"7 reps",          tip:"⚡ SUPER 7 · MÊMe haltère · Penché en avant dos plat · Coude fixe au corps · Étends le bras vers l arrière · Dessous des bras", pair:"ss2"},
+    {id:"j2_bird",   name:"Bird-dog à 4 pattes",                                icon:"stairs",          cat:"gainage",reps:"3 × 10 / côté", tip:"À 4 PATTES · Étends bras et jambe opposés · Maintiens 2 sec · Alterne · Protège la colonne vertébrale · Indispensable spondylarthrite"},
+    {id:"j2_sidepl", name:"Gainage latéral",                                    icon:"squat",           cat:"gainage",reps:"3 × 30 sec / côté", tip:"SUR LE CÔTÉ · Appui avant-bras latéral et orteils · Corps aligné · Obliques et gainage profond · Alterne les côtés"},
+    {id:"j2_iso",    name:"Extension triceps poulie haute corde — lente",       icon:"tricepsPush",     cat:"assist", reps:"3 × 15 reps", isIso:true, tip:"🎯 ISOLATION · DEBOUT · Corde · Coudes collés · Pousse vers le bas LENTEMENT · Dessous des bras · Concentre-toi sur la contraction en bas"},
   ]},
-  {id:"j3",label:"VEN",name:"Dos + Poitrine",sub:"Salle - Dos + Poitrine + Gainage",color:"#a855f7",exercises:[
-    {id:"j3_plank",   name:"Planche avant",               icon:"squat",          cat:"gainage", tip:"Au sol - Appui avant-bras et orteils - Corps droit - Coccyx dans l air - Contracte les abdos - 3 x 30 secondes"},
-    {id:"j3_mountain",name:"Mountain Climbers lents",      icon:"stairs",         cat:"gainage", tip:"Position planche - Ramene un genou vers la poitrine alternativement - Lentement et controle - Bas abdos"},
-    {id:"j3_latpull", name:"Lat Pulldown debout",          icon:"latPull",        cat:"assist", tip:"DEBOUT - Barre haute - Tire vers la poitrine en restant debout - Genoux legerement flechis - Dos large - Charge legere"},
-    {id:"j3_row",     name:"Cable Row debout",             icon:"seatedRow",      cat:"assist", tip:"DEBOUT - Poulie basse - Tire les poignees vers le ventre - Dos epaisseur - Garde le dos droit"},
-    {id:"j3_chestpress",name:"Cable Chest Press debout",  icon:"shoulderPress",  cat:"assist", tip:"DEBOUT - Deux poignees a hauteur epaule - Pousse devant toi comme un developpe couche - Pectoraux - Poulie des deux cotes"},
-    {id:"j3_fly",     name:"Cable Fly debout",             icon:"pecFly",         cat:"assist", tip:"DEBOUT - Deux poignees hautes - Ramene les bras devant toi en arc de cercle - Pectoraux - Si machine pas dispo fais Dumbbell Fly debout"},
-    {id:"j3_dbfly",   name:"Dumbbell Fly debout",          icon:"incline",        cat:"free",   tip:"DEBOUT - Halteres dans les mains - Bras en croix - Ramene les halteres devant toi - Alternative si Cable Fly pas disponible - Pectoraux"},
-    {id:"j3_cardio",  name:"Velo elliptique",              icon:"inclineTreadmill",cat:"cardio",tip:"20 min - Allure moderee - Cardio doux sans impact - Parfait pour coccyx et spondylarthrite"},
+  {id:"j3",label:"JEU",name:"Fessiers · Dessous des fesses",sub:"Salle · Ischios · Gainage · Cardio",color:"#a855f7",exercises:[
+    {id:"j3_warmup", name:"Échauffement — Marche tapis ou elliptique",     icon:"inclineTreadmill",cat:"warmup", reps:"5 min",           tip:"Marche légère ou elliptique · Chauffe les hanches et les jambes avant les exercices fessiers"},
+    {id:"j3_stepup", name:"Step-up sur banc avec haltères",                     icon:"stairs",          cat:"free",   reps:"3 × 12 / côté", tip:"DEBOUT · Monte sur le banc avec un pied · Pousse sur le talon · Descends lentement · Fessiers et dessous des fesses · Côté faible d abord"},
+    {id:"j3_pullt",  name:"Cable pull-through debout",                               icon:"pullThrough",     cat:"assist", reps:"3 × 15 reps", tip:"DEBOUT · Poulie basse · Corde entre les jambes · Penche le buste dos PLAT · Reviens debout en contractant fessiers et ischio · Remplace le hip thrust · Adapté coccyx"},
+    {id:"j3_legcurl",name:"Leg curl machine couché face ventre",               icon:"legCurl",         cat:"assist", reps:"3 × 12 reps", tip:"FACE VENTRE sur la machine · Ramène les talons vers les fesses · Ischios · Contraction lente · Relâche doucement · Dessous des fesses"},
+    {id:"j3_ss3a",   name:"Kickback fessier poulie basse",                           icon:"glueKick",        cat:"assist", reps:"7 reps / côté", tip:"⚡ SUPER 7 · Sangle cheville · Face à la poulie · Pousse la jambe vers l arrière · Contracte le fessier en haut · Dessous des fesses", pair:"ss3"},
+    {id:"j3_ss3b",   name:"Abduction latérale poulie basse",                    icon:"hipAbduct",       cat:"assist", reps:"7 reps / côté", tip:"⚡ SUPER 7 · MÊMe câble · Tourne-toi de côté · Sangle cheville · Écarte la jambe vers le côté · Culotte de cheval · Enchaîne sans poser", pair:"ss3"},
+    {id:"j3_super",  name:"Superman face ventre",                                    icon:"pullThrough",     cat:"gainage",reps:"3 × 12 reps", tip:"FACE VENTRE au sol · Lève les bras et les jambes simultanément · Maintiens 2 sec en haut · Renforce le bas du dos · Essentiel spondylarthrite"},
+    {id:"j3_plank",  name:"Planche avant",                                           icon:"squat",           cat:"gainage",reps:"3 × 30 sec",   tip:"FACE VENTRE · Appui avant-bras et orteils · Corps droit · Contracte les abdos · Ne laisse pas les hanches tomber"},
+    {id:"j3_iso",    name:"Kickback câble poulie basse — lent",            icon:"glueKick",        cat:"assist", reps:"3 × 15 / côté", isIso:true, tip:"🎯 ISOLATION · Sangle cheville · Face à la poulie · Pousse la jambe vers l arrière LENTEMENT · Maintiens 1 sec en haut · Dessous des fesses · Côté faible d abord"},
+    {id:"j3_cardio", name:"Cardio fin — Marche inclinée ou elliptique",    icon:"inclineTreadmill",cat:"cardio", reps:"15 min",          tip:"APRÈS l isolation · Marche inclinée 6-8% ou elliptique · Allure modérée · Brûle les graisses · Adapté coccyx et spondylarthrite"},
   ]},
-  {id:"j4",label:"DIM",name:"Maison - Halteres",sub:"Ischios + Fessiers + Bras + Dos + Gainage",color:"#2ecc71",exercises:[
-    {id:"j4_plank",   name:"Planche avant",               icon:"squat",          cat:"gainage", tip:"Au sol - Appui avant-bras et orteils - Corps droit - Coccyx dans l air - 3 x 30 secondes - Haut et bas abdos"},
-    {id:"j4_sideplank",name:"Planche laterale",           icon:"squat",          cat:"gainage", tip:"Au sol - Appui sur l avant-bras lateral - Corps de cote - Obliques - 3 x 20 secondes de chaque cote"},
-    {id:"j4_rdl",     name:"Romanian DL halteres",        icon:"barbellRow",     cat:"free",   tip:"DEBOUT - Halteres devant les cuisses - Descends le long des jambes - Dos plat - Ischios"},
-    {id:"j4_lunge",   name:"Fentes arriere halteres",     icon:"barbellRow",     cat:"free",   tip:"DEBOUT - Halteres dans les mains - Grand pas arriere - Ischios et fessiers - Alterne les jambes"},
-    {id:"j4_curl",    name:"Curl halteres alternes",      icon:"lateralRaise",   cat:"free",   tip:"DEBOUT - Alterne les bras - Coudes colles au corps - Biceps - Adapte la charge a la douleur"},
-    {id:"j4_press",   name:"Overhead Press halteres",     icon:"shoulderPress",  cat:"free",   tip:"DEBOUT - Halteres a hauteur epaule - Pousse vers le ciel - Epaules et triceps - Dos droit"},
-    {id:"j4_row",     name:"Bent Over Row halteres",      icon:"seatedRow",      cat:"free",   tip:"DEBOUT penche dos plat - Tire les halteres vers le ventre - Dos - Charge legere"},
-    {id:"j4_cardio",  name:"Marche rapide dehors",        icon:"inclineTreadmill",cat:"cardio",tip:"20-30 min - Marche rapide - Dehors si meteo ok - Sinon montees de genoux sur place"},
+  {id:"j4",label:"VEN",name:"Corps complet · Brûle-graisses",sub:"Salle · Poitrine · Dos · Fessiers · Cuisses",color:"#ff6b35",exercises:[
+    {id:"j4_warmup", name:"Échauffement — Marche tapis ou elliptique",     icon:"inclineTreadmill",cat:"warmup", reps:"5 min",           tip:"Marche légère ou elliptique · Corps complet · Chauffe toutes les articulations avant la séance"},
+    {id:"j4_sumo",   name:"Squat sumo haltère",                                 icon:"squat",           cat:"free",   reps:"3 × 15 reps", tip:"DEBOUT · Pieds très écartés · Haltère à 2 mains · Descends lentement · Intérieur cuisses et fessiers · Garde les talons au sol"},
+    {id:"j4_chest",  name:"Cable chest press debout",                                icon:"chestPress",      cat:"assist", reps:"3 × 12 reps", tip:"DEBOUT · 2 poignées à hauteur épaule · Pousse devant toi · Pectoraux · Si non disponible fais des pompes · Dos droit"},
+    {id:"j4_row",    name:"Tirage horizontal poulie debout",                         icon:"seatedRow",       cat:"assist", reps:"3 × 12 reps", tip:"DEBOUT · Poulie basse · Tire les poignées vers le ventre · Dos épaisseur · Garde le dos droit · Coudes le long du corps"},
+    {id:"j4_kick",   name:"Kickback fessier poulie basse debout",                    icon:"glueKick",        cat:"assist", reps:"3 × 12 / côté", tip:"DEBOUT · Sangle cheville · Face à la poulie · Pousse la jambe vers l arrière · Contracte le fessier · Dessous des fesses · Alterne"},
+    {id:"j4_ss4a",   name:"Bulgarian split squat haltère",                      icon:"squat",           cat:"free",   reps:"7 reps / côté", tip:"⚡ SUPER 7 · Pied arrière sur le banc · Descends contrôlé · Fessiers et cuisses · Côté faible d abord", pair:"ss4"},
+    {id:"j4_ss4b",   name:"Step-up sur banc haltère",                           icon:"stairs",          cat:"free",   reps:"7 reps / côté", tip:"⚡ SUPER 7 · MÊMe haltère · Monte sur le banc · Pousse sur le talon · Dessous des fesses · Enchaîne sans poser l haltère", pair:"ss4"},
+    {id:"j4_plank",  name:"Planche avant",                                           icon:"squat",           cat:"gainage",reps:"3 × 30 sec",   tip:"FACE VENTRE · Appui avant-bras et orteils · Corps droit · Contracte les abdos"},
+    {id:"j4_sidepl", name:"Gainage latéral",                                    icon:"squat",           cat:"gainage",reps:"3 × 30 sec / côté", tip:"SUR LE CÔTÉ · Appui avant-bras latéral et orteils · Corps aligné · Obliques · Alterne les côtés"},
+    {id:"j4_iso",    name:"Abduction debout poulie — lente",                    icon:"hipAbduct",       cat:"assist", reps:"3 × 15 / côté", isIso:true, tip:"🎯 ISOLATION · DEBOUT · Sangle cheville · Écarte la jambe vers le côté LENTEMENT · Culotte de cheval · Concentre-toi sur la brûlure"},
+    {id:"j4_cardio", name:"Cardio fin — Elliptique",                            icon:"inclineTreadmill",cat:"cardio", reps:"15 min",          tip:"APRÈS l isolation · Elliptique allure modérée · Terminer la séance en brûlant les graisses sans impact"},
+  ]},
+  {id:"j5",label:"SAM",name:"Maison · Corps entier",sub:"Haltères · Gainage · Optionnel",color:"#2ecc71",exercises:[
+    {id:"j5_warmup", name:"Mobilité articulaire",                               icon:"stairs",          cat:"warmup", reps:"5 min",           tip:"SANS ÉQUIPEMENT · Cercles de hanches · Cercles de bras · Balancements de jambes · Rotations du cou · Prépare les articulations en douceur"},
+    {id:"j5_squat",  name:"Squats haltères",                                    icon:"squat",           cat:"free",   reps:"3 × 15 reps", tip:"DEBOUT · Haltères dans les mains · Pieds largeur hanches · Descends cuisses parallèles · Remonte en contractant les fessiers"},
+    {id:"j5_bulg",   name:"Bulgarian split squat haltère",                      icon:"squat",           cat:"free",   reps:"3 × 12 / côté", tip:"DEBOUT · Pied arrière sur une chaise · Descends contrôlé · Fessiers · Commence sans haltère pour l équilibre · Côté faible d abord"},
+    {id:"j5_row",    name:"Rowing penché haltères",                        icon:"barbellRow",      cat:"free",   reps:"3 × 12 reps", tip:"DEBOUT penché dos plat · Tire les haltères vers le ventre · Dos épaisseur · Coudes le long du corps · Charge légère"},
+    {id:"j5_push",   name:"Pompes — sur genoux si besoin",                      icon:"bench",           cat:"free",   reps:"3 × 12 reps", tip:"FACE VENTRE · Mains largeur épaule · Corps droit · Descends la poitrine vers le sol · Sur les genoux si besoin · Pectoraux"},
+    {id:"j5_curl",   name:"Curl biceps haltères",                               icon:"preacher",        cat:"free",   reps:"3 × 12 reps", tip:"DEBOUT · Alterne les bras · Coudes collés au corps · Fléchis vers l épaule · Redescends lentement · Biceps"},
+    {id:"j5_ss5a",   name:"Fente statique haltère",                             icon:"squat",           cat:"free",   reps:"7 reps / côté", tip:"⚡ SUPER 7 · DEBOUT · Grand pas avant · Genou arrière vers le sol · Cuisses et fessiers · Alterne les côtés", pair:"ss5"},
+    {id:"j5_ss5b",   name:"Squat sumo haltère",                                 icon:"squat",           cat:"free",   reps:"7 reps",          tip:"⚡ SUPER 7 · MÊMe haltère · Pieds très écartés · Intérieur cuisses · Enchaîne directement", pair:"ss5"},
+    {id:"j5_bird",   name:"Bird-dog à 4 pattes",                                icon:"stairs",          cat:"gainage",reps:"3 × 10 / côté", tip:"À 4 PATTES · Étends bras et jambe opposés · Maintiens 2 sec · Alterne · Protège la colonne"},
+    {id:"j5_plank",  name:"Planche avant",                                           icon:"squat",           cat:"gainage",reps:"3 × 30 sec",   tip:"FACE VENTRE · Appui avant-bras et orteils · Corps droit · Contracte les abdos"},
+    {id:"j5_iso",    name:"Kickback triceps haltère debout — très lent", icon:"tricepsPush",  cat:"free",   reps:"3 × 15 / côté", isIso:true, tip:"🎯 ISOLATION · Penché en avant dos plat · Coude FIXE au corps · Étends le bras vers l arrière TRÈS LENTEMENT · Dessous des bras · Brûle jusqu au bout"},
   ]},
 ];
 
@@ -265,25 +289,22 @@ function getWK(){var d=getParisNow();return d.getFullYear()+'-W'+getISO();}
 function getTI(){
   var dow=getParisNow().getDay();
   dow=dow===0?6:dow-1;
-  var map={0:0,2:1,4:2,6:3};
+  // Lun→J1, Mar→J2, Jeu→J3, Ven→J4, Sam→J5 ; Mer/Dim → prochain
+  var map={0:0,1:1,3:2,4:3,5:4};
   if(map[dow]!==undefined){return map[dow];}
-  if(dow===1){return 1;}
-  if(dow===3){return 2;}
-  if(dow===5){return 3;}
-  return 0;
+  if(dow===2){return 2;} // Mer → montre J3 (Jeudi)
+  return 0; // Dim → montre J1 (Lundi)
 }
 function getReps(ex){
-  if(ex.cat==="cardio"){
-    var c={j1_cardio:"20 min",j2_cardio:"20 min",j3_cardio:"20 min",j4_cardio:"25 min marche"};
-    return c[ex.id]||"20 min";
-  }
-  return "3 x 12 reps";
+  if(ex.reps)return ex.reps;
+  if(ex.cat==='cardio'||ex.cat==='warmup')return'5 min';
+  return'3 × 12 reps';
 }
 function buildBlocks(exs){
   var blocks=[],cur=null;
   for(var i=0;i<exs.length;i++){
     var ex=exs[i];
-    if(ex.isAbdo||ex.cat==='cardio'||ex.isIso||!ex.pair){
+    if(ex.isAbdo||ex.cat==='cardio'||ex.cat==='warmup'||ex.isIso||!ex.pair){
       if(cur){blocks.push(cur);cur=null;}
       blocks.push({type:'solo',exercises:[ex]});
       continue;
@@ -296,6 +317,7 @@ function buildBlocks(exs){
 }
 function exCol(ex,dc){
   if(ex.cat==='cardio')return'#2ecc71';
+  if(ex.cat==='warmup')return'#f59e0b';
   return dc;
 }
 function ld(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}}
@@ -429,14 +451,14 @@ function blkHTML(block,day){
   }
   var gc=block.cat==='free'?'#ff6b35':'#3d8bff';
   return '<div class="ssblk" style="border:1.5px solid '+gc+'50">'
-    +'<div class="sshdr" style="background:'+gc+'15"><span class="sslbl" style="color:'+gc+'">\uD83D\uDD17 SUPERSET \u00b7 2 exercices</span></div>'
+    +'<div class="sshdr" style="background:'+gc+'15"><span class="sslbl" style="color:'+gc+'">\u26A1 SUPER 7 \u00b7 7 reps \u00b7 M\u00EAme \u00E9quipement</span></div>'
     +block.exercises.map(function(ex,i){
       var last=i===block.exercises.length-1;
       return '<div class="sswrap"><div class="ssnum" style="background:'+gc+'">'+(i+1)+'</div>'
         +exHTML(ex,day)+'</div>'
         +(!last?'<div class="ssbetween"><span class="ssarr" style="color:'+gc+'">\u2193 SANS REPOS, PASSE AU 2\u00c8ME</span></div>':'');
     }).join('')
-    +'<div class="ssftr" style="border-top:1px dashed '+gc+'30"><span style="color:'+gc+'">&#9201; Repos 60s apr\u00e8s les 2 exos \u00b7 puis recommencer</span></div>'
+    +'<div class="ssftr" style="border-top:1px dashed '+gc+'30"><span style="color:'+gc+'">&#9201; Repos 60-90s apr\u00e8s les 2 exercices \u00b7 puis recommencer \u00b7 3 s\u00e9ries</span></div>'
     +'</div>';
 }
 
@@ -460,9 +482,12 @@ function exHTML(ex,day){
   var w=S.weights[ex.id]||'';
   var hist=S.hist[ex.id]||[];
   var last=hist.length>0?hist[hist.length-1]:null;
-  var showSugg=w&&w!=='\u2014'&&!ex.isAbdo&&ex.cat!=='cardio'&&last&&last.completedCount>=3&&last.weight===w;
+  var noWeight=ex.cat==='cardio'||ex.cat==='warmup'||ex.cat==='gainage';
+  var showSugg=!noWeight&&w&&w!=='\u2014'&&!ex.isAbdo&&last&&last.completedCount>=3&&last.weight===w;
   var newW=w?(parseFloat(w)+2.5).toFixed(1):'';
   var catB=ex.isAbdo?'<span class="bdg bab">Abdos</span>'
+    :ex.cat==='warmup'?'<span class="bdg bw">\uD83D\uDD25 \u00C9chauffement</span>'
+    :ex.cat==='gainage'?'<span class="bdg bga">\uD83D\uDCAA Gainage</span>'
     :ex.cat==='assist'?'<span class="bdg ba">\uD83D\uDD35 Assist\u00e9e</span>'
     :ex.cat==='semi'?'<span class="bdg bs">\uD83D\uDFE1 Semi-guid\u00e9e</span>'
     :ex.cat==='free'?'<span class="bdg bf">\uD83D\uDD34 Libre</span>'
@@ -471,7 +496,7 @@ function exHTML(ex,day){
   var doneB=done?'<span class="bdg bd">\u2713 Fait</span>':'';
   var opts=['\u2014','2.5','5','7.5','10','12.5','15','17.5','20','22.5','25','27.5','30','32.5','35','40','45','50','55','60','70','80','90','100','120'];
   var selOpts=opts.map(function(o){return '<option value="'+o+'"'+(o===(w||'\u2014')?' selected':'')+'>'+(o==='\u2014'?'S\u00e9lectionner kg':o+' kg')+'</option>';}).join('');
-  var wRow=ex.cat!=='cardio'
+  var wRow=!noWeight
     ?'<div class="wrow">'
       +'<span style="font-size:11px;color:#8a7a9a">&#9878;</span>'
       +'<select class="wsel" data-id="'+ex.id+'" style="color:'+(w&&w!=='\u2014'?ec:'#8a7a9a')+';border-color:'+(w&&w!=='\u2014'?ec+'60':'#2a2a30')+'">'+selOpts+'</select>'
