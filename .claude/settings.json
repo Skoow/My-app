@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/user/My-app/.claude/stop-hook-git-check.sh"
+          },
+          {
+            "type": "command",
+            "command": "/home/user/My-app/.claude/push-myriam-main.sh",
+            "statusMessage": "Envoi vers main..."
+          }
+        ]
+      }
+    ]
+  }
+}
