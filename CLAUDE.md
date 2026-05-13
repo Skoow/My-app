@@ -15,7 +15,7 @@ Application web single-file (`index.html`) — aucun build system, tout est dans
 - Max 6 exercices par jour (hors abdos et cardio)
 - 1 Super 7 par jour (2 exercices enchaînés × 7 reps, même équipement)
 - 1 exercice isolation (`isIso:true`) par jour
-- Abdos 3×/semaine : J1=Planche avant, J3=Gainage latéral, J4=Mountain climbers lents
+- Abdos 3×/semaine : J1=Planche avant, J3=Gainage latéral, J4=Pallof press + Woodchop + Farmer carry
 - Cardio 3×/semaine : J1=15 min, J3=20 min, J4=15 min
 - Séries/reps : 3×12 pour composés chargés, 3×15 pour câbles/isolation légère
 
