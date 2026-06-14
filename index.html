@@ -308,7 +308,7 @@ function getTI(){
   var map={0:0,1:1,3:2,4:3,5:4};
   if(map[dow]!==undefined){return map[dow];}
   if(dow===2){return 2;} // Mer → montre J3 (Jeudi)
-  return 0; // Dim → montre J1 (Lundi)
+  return -1; // Dim → jour de repos, pas de séance aujourd'hui
 }
 function getReps(ex){
   if(ex.reps)return ex.reps;
@@ -340,7 +340,7 @@ function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 
 // ── STATE ──────────────────────────────────────────────────────────────────
 var TI=getTI();
-var DL='2026-06-11';
+var DL='2026-08-13';
 var JLEFT=Math.max(0,Math.floor((new Date(DL)-getParisNow())/86400000));
 var WK=getWK();
 var S={
@@ -408,16 +408,24 @@ function bindEvents(){
 }
 
 function buildHTML(){
-  var td=P[TI];
-  var daysHTML=S.mode==='today'
-    ?dayHTML(P[TI],TI,true)
-    :P.map(function(d,i){return dayHTML(d,i,false);}).join('');
+  var td=TI>=0?P[TI]:P[0];
+  var daysHTML;
+  if(S.mode==='today'){
+    if(TI<0){
+      daysHTML='<div style="text-align:center;padding:28px 16px 12px;color:#c090b0"><div style="font-size:36px;margin-bottom:8px">🌿</div><div style="font-weight:700;font-size:15px;color:#9070a0;margin-bottom:4px">Jour de repos</div><div style="font-size:12px">Prochaine séance demain — Lundi</div></div>'
+              +dayHTML(P[0],0,false);
+    } else {
+      daysHTML=dayHTML(P[TI],TI,true);
+    }
+  } else {
+    daysHTML=P.map(function(d,i){return dayHTML(d,i,false);}).join('');
+  }
   return '<div class="hdr">'
     +'<div class="hdr-top">'
     +'<div class="ttl">MYRIAM <span style="color:#e91e8c">&#9792;</span></div>'
     +'</div>'
     +'<div class="dlbar">'
-    +'<div><div class="dll">&#128197; R\u00c9VISION DU PROGRAMME</div><div class="dld">11 Juin 2026</div></div>'
+    +'<div><div class="dll">&#128197; D\u00c9BUT DU PROGRAMME</div><div class="dld">14 Juin 2026</div></div>'
     +'<div style="text-align:right">'+( JLEFT===0 ? '<div class="dlc" style="color:#e91e8c;font-size:1rem;line-height:1.1">&#10060; CHANGER</div><div class="dls" style="color:#e91e8c;font-weight:700">LE PROGRAMME</div>' : '<div class="dlc" style="color:'+(JLEFT<14?'#e91e8c':'#a855f7')+'">J\u2013'+JLEFT+'</div><div class="dls">jours restants</div>')+'</div>'
     +'</div></div>'
     +'<div class="mtog">'
