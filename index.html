@@ -536,7 +536,7 @@ function exHTML(ex,day){
     :ex.cat==='cardio'?'<span class="bdg bc">\uD83C\uDFC3 Cardio</span>':'';
   var isoB=ex.isIso?'<span class="bdg bi">\uD83C\uDFAF Isolation</span>':'';
   var doneB=done?'<span class="bdg bd">\u2713 Fait</span>':'';
-  var opts=['\u2014','2.5','5','7.5','10','12.5','15','17.5','20','22.5','25','27.5','30','32.5','35','40','45','50','55','60','70','80','90','100','120'];
+  var opts=['\u2014','4.5','9','14','18','23','27','32','36','41','45','50','54','59','64','68','73','77','82','86','91'];
   var selOpts=opts.map(function(o){return '<option value="'+o+'"'+(o===(w||'\u2014')?' selected':'')+'>'+(o==='\u2014'?'S\u00e9lectionner kg':o+' kg')+'</option>';}).join('');
   var wRow=!noWeight
     ?'<div class="wrow">'
