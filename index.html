@@ -524,7 +524,10 @@ function exHTML(ex,day){
   var w=S.weights[ex.id]||'';
   var hist=S.hist[ex.id]||[];
   var last=hist.length>0?hist[hist.length-1]:null;
-  var noWeight=ex.cat==='cardio'||ex.cat==='warmup'||ex.cat==='gainage'||ex.isAbs;
+  var WID={j1_squat:'h',j1_rdl:'h',j1_lunge:'l',j1_pullth:'m',j1_legcurl:'m',j1_iso:'none',j2_latpull:'m',j2_row:'m',j2_pullover:'l',j2_triceps1:'xl',j2_curl1:'xl',j2_triceps2:'l',j2_iso:'l',j3_sumo:'h',j3_lunge:'l',j3_abduc:'xl',j3_kick:'xl',j3_iso:'xl',j3_lunge2:'l',j4_press:'m',j4_chest:'m',j4_latera:'xl',j4_ecarte:'xl',j4_kickback:'xl',j4_curl:'l',j4_iso:'l',j5_squat:'m',j5_bulg:'l',j5_row:'m',j5_ss5a:'l',j5_ss5b:'m',j5_iso:'xl'};
+  var WMAP={xl:['—','4.5','9','14','18','23','27'],l:['—','4.5','9','14','18','23','27','32','36','41'],m:['—','9','14','18','23','27','32','36','41','45','50','54','59'],h:['—','14','18','23','27','32','36','41','45','50','54','59','64','68','73','77','82','86','91']};
+  var wset=WID[ex.id]||'full';
+  var noWeight=ex.cat==='cardio'||ex.cat==='warmup'||ex.cat==='gainage'||ex.isAbs||wset==='none';
   var showSugg=!noWeight&&w&&w!=='\u2014'&&!ex.isAbs&&last&&last.completedCount>=3&&last.weight===w;
   var newW=w?(parseFloat(w)+2.5).toFixed(1):'';
   var catB=ex.isAbs?'<span class="bdg babs">💪 Abdos</span>'
@@ -536,7 +539,7 @@ function exHTML(ex,day){
     :ex.cat==='cardio'?'<span class="bdg bc">\uD83C\uDFC3 Cardio</span>':'';
   var isoB=ex.isIso?'<span class="bdg bi">\uD83C\uDFAF Isolation</span>':'';
   var doneB=done?'<span class="bdg bd">\u2713 Fait</span>':'';
-  var opts=['\u2014','4.5','9','14','18','23','27','32','36','41','45','50','54','59','64','68','73','77','82','86','91'];
+  var opts=WMAP[wset]||['\u2014','4.5','9','14','18','23','27','32','36','41','45','50','54','59','64','68','73','77','82','86','91'];
   var selOpts=opts.map(function(o){return '<option value="'+o+'"'+(o===(w||'\u2014')?' selected':'')+'>'+(o==='\u2014'?'S\u00e9lectionner kg':o+' kg')+'</option>';}).join('');
   var wRow=!noWeight
     ?'<div class="wrow">'
